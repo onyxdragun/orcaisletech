@@ -32,6 +32,10 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
-    return NextResponse.json({ error: (error as any)?.message || "Failed to send message." }, { status: 500 });
+    let errorMessage = "Failed to send message.";
+    if (error && typeof error === "object" && "message" in error) {
+      errorMessage = String((error as { message?: unknown }).message);
+    }
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
