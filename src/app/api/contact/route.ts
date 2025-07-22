@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       "h:Reply-To": email,
     });
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ error: error?.message || "Failed to send message." }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ error: (error as any)?.message || "Failed to send message." }, { status: 500 });
   }
 }
